@@ -58,7 +58,8 @@ class ProductService extends ChangeNotifier {
     final url = Uri.https(baseurl, 'products.json');
     final resp = await http.post(url, body: product.toJson());
     final decodedData = json.decode(resp.body);
-    print(decodedData);
+    product.id = decodedData['name'];
+    products.add(product);
     return decodedData['name'];
   }
 }

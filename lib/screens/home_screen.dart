@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:products_app/models/models.dart';
 import 'package:products_app/screens/screens.dart';
 import 'package:products_app/services/services.dart';
 import 'package:products_app/widgets/product_card.dart';
@@ -20,14 +21,21 @@ class HomeScreen extends StatelessWidget {
           itemCount: productsService.products.length,
           itemBuilder: ((BuildContext context, index) => GestureDetector(
               onTap: () {
-                productsService.selectedProduct = productsService.products[index].copy();
+                productsService.selectedProduct =
+                    productsService.products[index].copy();
                 Navigator.pushNamed(context, 'product');
               },
               child: ProductCard(
                 product: productsService.products[index],
               )))),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          productsService.selectedProduct = Product(
+              available: false,
+              name: '',
+              price: 0,);
+          Navigator.pushNamed(context, 'product');
+        },
         child: const Icon(Icons.add),
       ),
     );
