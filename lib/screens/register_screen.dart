@@ -124,9 +124,13 @@ class _LoginForm extends StatelessWidget {
                         if (!loginForm.isValidForm()) return;
                         loginForm.isLoading = true;
                         final authService = Provider.of<AuthService>(context, listen: false);
-                        String token? =  await authService.createUser(loginForm.email, loginForm.password);
+                        String? errorMessage =  await authService.createUser(loginForm.email, loginForm.password);
+                        if (errorMessage == null) {
+                          Navigator.pushReplacementNamed(context, 'home');
+                        } else {
+                          print(errorMessage);
+                        }
                         loginForm.isLoading = false;
-                        Navigator.pushReplacementNamed(context, 'home');
                       },
                 child: Container(
                     padding: const EdgeInsets.symmetric(
