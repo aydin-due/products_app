@@ -123,14 +123,16 @@ class _LoginForm extends StatelessWidget {
                         FocusScope.of(context).unfocus();
                         if (!loginForm.isValidForm()) return;
                         loginForm.isLoading = true;
-                        final authService = Provider.of<AuthService>(context, listen: false);
-                        String? errorMessage =  await authService.createUser(loginForm.email, loginForm.password);
+                        final authService =
+                            Provider.of<AuthService>(context, listen: false);
+                        String? errorMessage = await authService.createUser(
+                            loginForm.email, loginForm.password);
                         if (errorMessage == null) {
                           Navigator.pushReplacementNamed(context, 'home');
                         } else {
                           print(errorMessage);
+                          loginForm.isLoading = false;
                         }
-                        loginForm.isLoading = false;
                       },
                 child: Container(
                     padding: const EdgeInsets.symmetric(
