@@ -55,12 +55,15 @@ class _ProductScreenBody extends StatelessWidget {
                     top: 60,
                     right: 20,
                     child: IconButton(
-                        onPressed: () {
+                        onPressed: () async {
                           final picker = ImagePicker();
-                          final image = picker.pickImage(
+                          final image = await picker.pickImage(
                               source: ImageSource.gallery,
                               imageQuality: 100,
                               maxWidth: 400);
+                          
+                          if (image == null) return;
+                          productService.updateSelectedProductImage(image.path);
                         },
                         icon: const Icon(
                           Icons.camera_alt_outlined,

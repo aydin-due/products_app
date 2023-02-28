@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:products_app/models/models.dart';
@@ -10,6 +11,7 @@ class ProductService extends ChangeNotifier {
   bool isLoading = true;
   bool isSaving = false;
   late Product selectedProduct;
+  File? image;
 
   ProductService() {
     getProducts();
@@ -50,7 +52,8 @@ class ProductService extends ChangeNotifier {
   Future<String> updateProduct(Product product) async {
     final url = Uri.https(baseurl, 'products/${product.id}.json');
     await http.put(url, body: product.toJson());
-    products[products.indexWhere((element) => element.id == product.id)] = product;
+    products[products.indexWhere((element) => element.id == product.id)] =
+        product;
     return product.id!;
   }
 
@@ -61,5 +64,11 @@ class ProductService extends ChangeNotifier {
     product.id = decodedData['name'];
     products.add(product);
     return decodedData['name'];
+  }
+
+  void updateSelectedProductImage(String path) {
+    selectedProduct.picture = path;
+    image = File.fromUri(Uri(path: path));
+    notifyListeners();
   }
 }
