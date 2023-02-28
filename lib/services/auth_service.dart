@@ -48,4 +48,8 @@ class AuthService extends ChangeNotifier {
     await storage.delete(key: 'token');
     return;
   }
+
+  Future<String> readToken() async {
+    return await storage.read(key: 'token') ?? ''; 
+  }
 }
