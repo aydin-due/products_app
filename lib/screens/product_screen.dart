@@ -82,6 +82,7 @@ class _ProductScreenBody extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           if (!productForm.isValidForm()) return;
+          final String? imageURL = await productService.uploadImage();
           await productService.saveProduct(productForm.product);
         },
         elevation: 0,

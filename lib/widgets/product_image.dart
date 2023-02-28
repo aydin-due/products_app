@@ -30,6 +30,7 @@ class ProductImage extends StatelessWidget {
   }
 
   Widget getImage(String? image) {
+    print(image);
     if (image == null) {
       return Image.asset('assets/no-image.png', fit: BoxFit.cover);
     }
@@ -41,7 +42,7 @@ class ProductImage extends StatelessWidget {
         fit: BoxFit.cover,
       );
     }
-    
+
     return Image.file(File(image), fit: BoxFit.cover);
   }
 
