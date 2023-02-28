@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:products_app/screens/screens.dart';
 import 'package:products_app/services/services.dart';
 import 'package:provider/provider.dart';
 
@@ -14,12 +15,9 @@ class CheckAuthScreen extends StatelessWidget {
         child: FutureBuilder(
             future: authService.readToken(),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              if (snapshot.hasData) return const Text('Espere...');
-                Future.microtask(() {
-                  Navigator.pushReplacementNamed(context, 'home');
-                });
-              
-              return Container();
+              if (!snapshot.hasData) return const Text('Espere...');
+              if (snapshot.data == '') return const LoginScreen();
+              return const HomeScreen();
             }),
       ),
     );
